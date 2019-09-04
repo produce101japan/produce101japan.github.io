@@ -405,6 +405,10 @@ footer{
     font-size: 12px;
 }
 
+footer li{
+  list-style-type: none;
+}
+
 #switch_lang{
     font-size: 10px;
     margin-top: 10px;
@@ -412,7 +416,7 @@ footer{
 }
 
 #current_date{
-  margin-top: 2px;
+  margin-top: 5px;
   margin-bottom: 5px;
   font-size: 12px;
   text-align: right;
@@ -421,13 +425,12 @@ footer{
 @media screen and (max-width: 480px) {
 #top-banner {
   padding: 3px;
-  height: 20px;
 }
 #banner-image {
   width: 20px;
   display: inline-block;
   margin: 0;
-  vertical-align: bottom;
+  vertical-align: middle;
 }
 #banner-title {
   font-size: 14px;
