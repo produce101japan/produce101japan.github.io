@@ -347,6 +347,7 @@ body {
   font-family: 'Open Sans', sans-serif;
   font-size: 11px;
   text-align: center;
+  padding: 0px 3px;
 }
 
 /* Styles for different badge colors */
@@ -516,14 +517,27 @@ footer li{
 
 /* Ranking Styles */
 #ranking__pyramid {
-  transform: scale(0.6);
-  margin: -90px -108px -70px -108px;
+  transform: scale(0.65);
+  margin: -75px -95px -70px -95px;
 }
-
 
 /* Generic Styles */
 .padded-box {
-  padding: 20px;
+  padding: 10px;
+}
+
+}
+
+@media screen and (max-width: 360px) {
+/* Ranking Styles */
+#ranking__pyramid {
+  transform: scale(0.55);
+  margin: -95px -121px -90px -121px;
+}
+
+/* Generic Styles */
+.padded-box {
+  padding: 10px;
 }
 
 }
