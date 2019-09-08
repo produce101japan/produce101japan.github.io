@@ -187,7 +187,7 @@ function populateTableEntry(trainee) {
     </div>
     <div class="table__entry-text">
       <span class="name"><strong>${isJapanese?trainee.name_japanese:trainee.name_romanized}</strong></span>
-      <span class="hangul">(${trainee.name_hangul})</span>
+      <span class="hangul">(${isJapanese?trainee.name_romanized:trainee.name_japanese})</span>
       <!-- <span class="companyandyear">${trainee.company} • ${trainee.birthyear}</span> -->
     </div>
   </div>`;
@@ -409,7 +409,7 @@ function setDate() {
                    + " " + zeroPadding(today.getHours() , 2)
                    + ":" + zeroPadding(today.getMinutes(), 2) ;
 
-  document.getElementById("current_date").innerHTML = dateString + " 現在";
+  document.getElementById("current_date").innerHTML =  (isJapanese?"":"at ") + dateString + (isJapanese?" 現在":"");
 }
 
 function zeroPadding(num,length){
