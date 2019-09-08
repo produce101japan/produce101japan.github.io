@@ -531,13 +531,15 @@ footer li{
 @media screen and (max-width: 360px) {
 /* Ranking Styles */
 #ranking__pyramid {
+  transform: scale(0.6);
+  margin: -85px -108px -70px -108px;
+}
+}
+
+@media screen and (max-width: 320px) {
+/* Ranking Styles */
+#ranking__pyramid {
   transform: scale(0.55);
   margin: -95px -121px -90px -121px;
 }
-
-/* Generic Styles */
-.padded-box {
-  padding: 10px;
-}
-
 }
