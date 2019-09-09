@@ -73,27 +73,49 @@ function newRanking() {
   return ranking;
 }
 
-// Clears out the ranking
-function clearRanking() {
-  // Currently just duplicates first ranking entry
-  let ranking_chart = document.getElementById("ranking__pyramid");
-  let rankRows = Array.from(ranking_chart.children).slice(1); // remove the title element
-  // let rankEntry = rankRows[0].children[0];
-  for (let i = 0; i < rowNums.length; i++) {
-    let rankRow = rankRows[i];
-    for (let j = 0; j < rowNums[i]; j++) {
-      removeAllChildren(rankRow);
-    }
-  }
-}
-
 // Uses populated local data structure from getRanking to populate ranking
 function renderList(trainee) {
   let listTrainee = document.getElementById("trainee__list");
   for (let i = 0; i < trainee.length; i++) {
-      listTrainee.insertAdjacentHTML("beforeend", renderListEntry(trainee[i]))
-    }
+    listTrainee.insertAdjacentHTML("beforeend", renderListEntry(trainee[i]))
   }
+  var entryIcons = document.getElementsByClassName("list__entry-icon");
+  for(let i = 0; i < entryIcons.length; i++){
+    entryIcons[i].addEventListener("click", function (event) {
+      var currentGrade = getCurrentGrade(event.target.className);
+      var nextGrade = toggleGrade(currentGrade);
+      event.target.className = "list__entry-icon-border "+nextGrade+"-rank-border";
+    });
+  }
+}
+
+function getCurrentGrade(className){
+  if(className.includes("a-rank-border")){
+    return "a";
+  }
+  if(className.includes("b-rank-border")){
+    return "b";
+  }
+  if(className.includes("c-rank-border")){
+    return "c";
+  }
+  return "no";
+}
+
+function toggleGrade(currentGrade){
+  if(currentGrade === "no"){
+    return "a";
+  }
+  if(currentGrade === "a"){
+    return "b";
+  }
+  if(currentGrade === "b"){
+    return "c";
+  }
+  if(currentGrade === "c"){
+    return "no";
+  }
+}
 
 function renderListEntry(trainee) {
   let modifiedCompany = trainee.company;
@@ -104,7 +126,7 @@ function renderListEntry(trainee) {
     <div class="list__entry-view">
       <div class="list__entry-icon">
         <img class="list__entry-img" src="assets/trainees/${trainee.image}" />
-        <div class="list__entry-icon-border f-rank-border"></div>
+        <div class="list__entry-icon-border no-rank-border"></div>
       </div>
     </div>
     <div class="list__row-text">
@@ -112,93 +134,6 @@ function renderListEntry(trainee) {
     </div>
   </div>`;
   return rankingEntry;
-}
-
-// Uses populated local data structure from getRanking to populate ranking
-function populateRanking() {
-  // Currently just duplicates first ranking entry
-  let ranking_chart = document.getElementById("ranking__pyramid");
-  let rankRows = Array.from(ranking_chart.children).slice(1); // remove the title element
-  // let rankEntry = rankRows[0].children[0];
-  let currRank = 1;
-  for (let i = 0; i < rowNums.length; i++) {
-    let rankRow = rankRows[i];
-    for (let j = 0; j < rowNums[i]; j++) {
-      let currTrainee = ranking[currRank-1];
-      rankRow.insertAdjacentHTML("beforeend", populateRankingEntry(currTrainee, currRank))
-
-      let insertedEntry = rankRow.lastChild;
-      let dragIcon = insertedEntry.children[0].children[0]; // drag icon is just the trainee image and border
-      let iconBorder = dragIcon.children[1]; // this is just the border and the recipient of dragged elements
-      // only add these event listeners if a trainee exists in this slot
-      if (currTrainee.id >= 0) {
-        // add event listener to remove item
-        insertedEntry.addEventListener("click", function (event) {
-          rankingClicked(currTrainee);
-        });
-        // add event listener for dragging
-        dragIcon.setAttribute('draggable', true);
-        dragIcon.classList.add("drag-cursor");
-        dragIcon.addEventListener("dragstart", createDragStartListener(currRank - 1));
-      }
-      // add event listeners for blank/filled ranking entries
-      iconBorder.addEventListener("dragenter", createDragEnterListener());
-      iconBorder.addEventListener("dragleave", createDragLeaveListener());
-      iconBorder.addEventListener("dragover", createDragOverListener());
-      iconBorder.addEventListener("drop", createDropListener());
-      // }
-      currRank++;
-    }
-  }
-}
-
-// uses the current filter text to create a subset of trainees with matching info
-function filterTrainees(event) {
-  let filterText = event.target.value.toLowerCase();
-  // filters trainees based on name, alternate names, and company
-  filteredTrainees = trainees.filter(function (trainee) {
-    let initialMatch = includesIgnCase(trainee.name_romanized, filterText)
-      // || includesIgnCase(trainee.company, filterText)
-      || includesIgnCase(trainee.name_hangul, filterText)
-      || includesIgnCase(trainee.name_japanese, filterText);
-    // if alernates exists then check them as well
-    let alternateMatch = false;
-    let alternates = alternateRomanizations[trainee.name_romanized.toLowerCase()]
-    if (alternates) {
-      for (let i = 0; i < alternates.length; i++) {
-        alternateMatch = alternateMatch || includesIgnCase(alternates[i], filterText);
-      }
-    }
-    return initialMatch || alternateMatch;
-  });
-  filteredTrainees = sortedTrainees(filteredTrainees);
-  rerenderTable();
-}
-
-// Checks if mainString includes a subString and ignores case
-function includesIgnCase(mainString, subString) {
-  return mainString.toLowerCase().includes(subString.toLowerCase());
-}
-
-// Finds the first blank spot for
-function addRankedTrainee(trainee) {
-  for (let i = 0; i < ranking.length; i++) {
-    if (ranking[i].id === -1) { // if spot is blank denoted by -1 id
-      ranking[i] = trainee;
-      return true;
-    }
-  }
-  return false;
-}
-
-function removeRankedTrainee(trainee) {
-  for (let i = 0; i < ranking.length; i++) {
-    if (ranking[i].id === trainee.id) { // if trainee's match
-      ranking[i] = newTrainee();
-      return true;
-    }
-  }
-  return false;
 }
 
 const currentURL = "https://produce101japan.github.io/";
@@ -257,11 +192,9 @@ var trainees = [];
 var filteredTrainees = [];
 // holds the ordered list of rankings that the user selects
 var ranking = newRanking();
-const rowNums = [8,8,8,8,8,8,8,8];
 // holds true if using japanese
 var isJapanese = false;
 setLang();
-//populateRanking();
 readFromCSV("./trainee_info.csv");
 //getRanking();
 setDate();

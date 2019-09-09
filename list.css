@@ -81,25 +81,25 @@
 
 /* Different entry borders */
 .a-rank-border.list__entry-icon-border {
-  border: 4px solid var(--a-rank);
+  border: 6px solid var(--a-rank);
 }
 .b-rank-border.list__entry-icon-border {
-  border: 4px solid var(--b-rank);
+  border: 6px solid var(--b-rank);
 }
 .c-rank-border.list__entry-icon-border {
-  border: 4px solid var(--c-rank);
+  border: 6px solid var(--c-rank);
 }
 .d-rank-border.list__entry-icon-border {
-  border: 4px solid var(--d-rank);
+  border: 6px solid var(--d-rank);
 }
 .f-rank-border.list__entry-icon-border {
-  border: 4px solid var(--f-rank);
+  border: 6px solid var(--f-rank);
 }
 .x-rank-border.list__entry-icon-border  {
-  border: 4px solid var(--x-rank);
+  border: 6px solid var(--x-rank);
 }
 .eliminated.list__entry-icon-border {
-  border: 4px solid var(--no-rank);
+  border: 6px solid var(--no-rank);
 }
 
 @media screen and (max-width: 800px) {
