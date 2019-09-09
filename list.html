@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta name="google-site-verification" content="7p1WafVpQTLkZyuTgblWByOqOKhbZ05coC5oHC3f8b0"/>
+  <meta property="og:title" content="Produce 101 Japan 推しMENリスト"/>
+  <meta property="og:url" content="https://produce101japan.github.io/list.html"/>
+  <meta property="og:type" content="website"/>
+  <!--<meta property="og:image" content="https://produce101japan.github.io/assets/thumbnail2.png"/>-->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@ai_var_">
+  <meta name="twitter:title" content="Produce 101 Japan 推しMENリスト">
+  <!--<meta name="twitter:image" content="https://produce101japan.github.io/assets/thumbnail2.png">-->
+
+  <link rel="icon" href="assets/pickme.png">
+  <link rel="stylesheet" type="text/css" media="screen" href="styles.css?201909090210"/>
+  <link rel="stylesheet" type="text/css" media="screen" href="list.css"/>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Roboto+Condensed:400,700"
+        rel="stylesheet">
+  <title>Produce 101 Japan 推しMENリスト</title>
+</head>
+<body>
+<div id="top-banner">
+  <a href="/"><img id="banner-image" src="assets/logo.svg"/></a>
+  <p id="banner-title">PRODUCE 101 JAPAN</p>
+  <p id="banner-subtitle">推しMENリスト</p>
+</div>
+<div class="trainee__padding">
+  <div id="trainee__table">
+    <div id="trainee__list">
+    </div>
+    <div id="current_date"></div>
+  </div>
+  <div>
+    <div id="filters-container">
+      <div id="filters-header"><strong>Filters</strong></div>
+      <div>
+        <input type="checkbox" name="show-eliminated" id="show-eliminated"
+               onclick="showEliminatedClick(event)"/>
+        <label class="checkbox-label" for="show-eliminated">Show Eliminated (At Bottom)</label>
+      </div>
+      <div>
+        <input type="checkbox" name="show-top11" id="show-top11" onclick="showTop11Click(event)"/>
+        <label class="checkbox-label" for="show-top11">Show Current Top 10</label>
+      </div>
+    </div>
+    <div id="sharelink-container">
+      <!-- button -->
+      <input type="button" id="getlink-button" value="Get link" onclick="generateShareLink()"/>
+      <!-- text box -->
+      <input type="text" placeholder="http://" id="getlink-textbox" readonly/>
+      <!-- button in text box -->
+      <input type="button" id="copylink-button" value="Copy" onclick="copyLink()"/>
+    </div>
+  </div>
+</div>
+<footer>
+  <p>switch to <a href="?lang=en">EN</a> | <a href="?lang=ja">JA</a></p>
+  <p><a href="/">推しMENメーカー</a></p>
+  <!--<p id="switch_lang"><a href="?lang=en">switch to ENGLISH</a></p>-->
+</footer>
+
+<!-- Load in script files -->
+<script src="scripts/csv.js"></script>
+<script src="scripts/dragula.min.js"></script>
+<script src="scripts/dragdrop.js"></script>
+<script src="scripts/traineesort.js"></script>
+<script src="scripts/list.js?201909050130"></script>
+
+</body>
+</html>
