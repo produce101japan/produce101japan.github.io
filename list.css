@@ -106,6 +106,21 @@
   font-weight: 700;
 }
 
+#how-to-use{
+  padding: 12px;
+  font-size: 14px;
+}
+
+#how-to-use ul{
+  list-style-type: none;
+  padding-inline-start: 20px;
+}
+
+#how-to-use li.en{
+  padding-left: 10px;
+  font-size: 12px;
+}
+
 @media screen and (max-width: 800px) {
   #trainee__table {
     transform: scale(0.9);

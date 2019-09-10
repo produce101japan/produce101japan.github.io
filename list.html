@@ -32,20 +32,9 @@
     <div id="trainee__list">
 
       <div class="list__entry">
-          <div class="list__entry-view">
-            <div class="list__entry-icon">
-              <img class="list__entry-img" src="assets/a-heart.png" />
-            </div>
-          </div>
-          <div class="list__row-text">
-            <div class="name"></div>
-          </div>
-      </div>
-
-      <div class="list__entry">
         <div class="list__entry-view">
           <div class="list__entry-icon">
-            <img class="list__entry-img" src="assets/b-heart.png" />
+            <img class="list__entry-img" src="assets/a-heart.png"/>
           </div>
         </div>
         <div class="list__row-text">
@@ -56,7 +45,18 @@
       <div class="list__entry">
         <div class="list__entry-view">
           <div class="list__entry-icon">
-            <img class="list__entry-img" src="assets/c-heart.png" />
+            <img class="list__entry-img" src="assets/b-heart.png"/>
+          </div>
+        </div>
+        <div class="list__row-text">
+          <div class="name"></div>
+        </div>
+      </div>
+
+      <div class="list__entry">
+        <div class="list__entry-view">
+          <div class="list__entry-icon">
+            <img class="list__entry-img" src="assets/c-heart.png"/>
           </div>
         </div>
         <div class="list__row-text">
@@ -67,30 +67,45 @@
     </div>
     <div id="current_date"></div>
   </div>
-  <div>
-    <div id="filters-container">
-      <div id="filters-header"><strong>Filters</strong></div>
-      <div>
-        <input type="checkbox" name="show-eliminated" id="show-eliminated"
-               onclick="showEliminatedClick(event)"/>
-        <label class="checkbox-label" for="show-eliminated">Show Eliminated (At Bottom)</label>
-      </div>
-      <div>
-        <input type="checkbox" name="show-top11" id="show-top11" onclick="showTop11Click(event)"/>
-        <label class="checkbox-label" for="show-top11">Show Current Top 10</label>
-      </div>
+  <p>
+  <div id="filters-container">
+    <div id="filters-header"><strong>Filters</strong></div>
+    <div>
+      <input type="checkbox" name="show-eliminated" id="show-eliminated"
+             onclick="showEliminatedClick(event)"/>
+      <label class="checkbox-label" for="show-eliminated">Show Eliminated (At Bottom)</label>
     </div>
-    <div id="sharelink-container">
-      <!-- button -->
-      <input type="button" id="getlink-button" value="Get link" onclick="generateShareLink()"/>
-      <!-- text box -->
-      <input type="text" placeholder="http://" id="getlink-textbox" readonly/>
-      <!-- button in text box -->
-      <input type="button" id="copylink-button" value="Copy" onclick="copyLink()"/>
+    <div>
+      <input type="checkbox" name="show-top11" id="show-top11" onclick="showTop11Click(event)"/>
+      <label class="checkbox-label" for="show-top11">Show Current Top 10</label>
     </div>
-    <div id="create-new-container">
-      <input type="button" id="create-new-button" value="Reset" onclick="resetAll()"/>
-    </div>
+  </div>
+  <div id="sharelink-container">
+    <!-- button -->
+    <input type="button" id="getlink-button" value="Get link" onclick="generateShareLink()"/>
+    <!-- text box -->
+    <input type="text" placeholder="http://" id="getlink-textbox" readonly/>
+    <!-- button in text box -->
+    <input type="button" id="copylink-button" value="Copy" onclick="copyLink()"/>
+  </div>
+  <div id="how-to-use">
+    <p>使い方～How to use～</p>
+    <ul>
+      <li>画像クリックで<span class="c-rank">気になる</span>→<span class="b-rank">推し</span>→<span class="a-rank">最推し</span>の順で変化します
+      </li>
+      <li class="en">Change to <span class="c-rank">favorite</span>→<span class="b-rank">pick</span>→<span
+          class="a-rank">1pick</span> by clicking image
+      </li>
+      <li><span class="a-rank">最推し</span>は一人のみ</li>
+      <li class="en">Pick only one for <span class="a-rank">1pick</span></li>
+      <li>スクショするかGet LinkでURLを取得できます</li>
+      <li class="en">Take a screenshoot or get link with a button</li>
+      <li>Resetで初めから</li>
+      <li class="en">Reset all with Reset button</li>
+    </ul>
+  </div>
+  <div id="create-new-container">
+    <input type="button" id="create-new-button" value="Reset" onclick="resetAll()"/>
   </div>
 </div>
 <footer>
