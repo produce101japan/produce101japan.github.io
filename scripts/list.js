@@ -149,7 +149,7 @@ function generateShareLink() {
     }
   }
   console.log(shareCode)
-  shareURL = currentURL + "?r=" + shareCode;
+  shareURL = currentURL + "?p=" + shareCode;
   showShareLink(shareURL);
 }
 
@@ -224,8 +224,8 @@ function zeroPadding(num, length){
 
 function setGrades() {
   var urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.has("r")) {
-    let rankString = urlParams.get("r")
+  if (urlParams.has("p")) {
+    let rankString = urlParams.get("p")
     let rankingIds = [];
     let k = 0;
     for (let i = 0; i < rankString.length; i += paramGroupDigits) {
