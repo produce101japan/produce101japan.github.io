@@ -44,33 +44,11 @@ function convertCSVArrayToTraineeData(csvArrays) {
     trainee.birthyear = traineeArray[6];
     trainee.eliminated = traineeArray[7] === 'e'; // sets trainee to be eliminated if 'e' appears in 6th col
     trainee.top11 = traineeArray[8] === 't'; // sets trainee to top 11 if 't' appears in 6th column
-    trainee.id = parseInt(traineeArray[0].split('_')[0]); // trainee id is the original ordering of the trainees in the first csv
+    trainee.id = index
     return trainee;
   });
   filteredTrainees = trainees;
   return trainees;
-}
-
-// Constructor for a blank trainee
-function newTrainee() {
-  return {
-    id: -1, // -1 denotes a blank trainee spot
-    name_romanized: '&#8203;', // this is a blank character
-    name_japanese: '&#8203;', // this is a blank character
-    company: '&#8203;', // this is a blank character
-    grade: 'no',
-    image: 'emptyrank.png',
-  };
-}
-
-// Constructor for a blank ranking list
-function newRanking() {
-  // holds the ordered list of rankings that the user selects
-  let ranking = new Array(99);
-  for (let i = 0; i < ranking.length; i++) {
-    ranking[i] = newTrainee();
-  }
-  return ranking;
 }
 
 // Uses populated local data structure from getRanking to populate ranking
@@ -78,21 +56,28 @@ function renderList(trainee) {
   let listTrainee = document.getElementById("trainee__list");
   for (let i = 0; i < trainee.length; i++) {
     listTrainee.insertAdjacentHTML("beforeend", renderListEntry(trainee[i]))
-    document.getElementById("list__entry-trainee-"+ trainee[i].id)
+    document.getElementById("list__entry-trainee-"+ i)
       .addEventListener("click", function (event) {
-        var target = document.getElementById("list__entry-view-"+trainee[i].id);
-        var currentGrade = getCurrentGrade(target.className);
+        var currentGrade = getCurrentGrade(getGradeOfTrainee(i));
         var hasA = false;
         for (let j = 0; j < trainee.length; j++) {
-          if(getCurrentGrade(document.getElementById("list__entry-view-"+ trainee[j].id).className) == "a"){
+          if(getCurrentGrade(getGradeOfTrainee(j)) == "a"){
             hasA = true;
             break;
           }
         }
         var nextGrade = toggleGrade(currentGrade, hasA);
-        target.className = nextGrade+"-rank";
+        setGradeToTrainee(i, nextGrade)
       });
   }
+}
+
+function getGradeOfTrainee(traineeIdToGet){
+  return document.getElementById("list__entry-view-"+ traineeIdToGet).className;
+}
+
+function setGradeToTrainee(traineeIdToSet, traineeGradeToSet){
+  document.getElementById("list__entry-view-"+traineeIdToSet).className = traineeGradeToSet+"-rank";
 }
 
 function getCurrentGrade(className){
@@ -147,15 +132,19 @@ function renderListEntry(trainee) {
   return rankingEntry;
 }
 
-const currentURL = "https://produce101japan.github.io/";
+const currentURL = "https://produce101japan.github.io/list.html";
 // Serializes the ranking into a string and appends that to the current URL
 function generateShareLink() {
-  let shareCode = ranking.map(function (trainee) {
-    let twoCharID = ("0" + trainee.id).slice(-2); // adds a zero to front of digit if necessary e.g 1 --> 01
-    return twoCharID;
-  }).join("");
+  var shareCode= "";
+  for (let j = 0; j < trainees.length; j++) {
+    var grade = getCurrentGrade(document.getElementById("list__entry-view-"+ trainees[j].id).className);
+    if(grade != "no"){
+      shareCode += zeroPadding(j, 2) + grade;
+    }
+  }
   console.log(shareCode);
   shareCode = btoa(shareCode);
+  console.log(shareCode.length);
   shareURL = currentURL + "?r=" + shareCode;
   showShareLink(shareURL);
 }
@@ -193,19 +182,31 @@ function setDate() {
   document.getElementById("current_date").innerHTML =  (isJapanese?"":"at ") + dateString + (isJapanese?" 現在":"");
 }
 
-function zeroPadding(num,length){
+function zeroPadding(num, length){
   return ('0' + num).slice(-length);
+}
+
+function setGrades() {
+  var urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has("r")) {
+    let rankString = atob(urlParams.get("r")) // decode the saved ranking
+    let rankingIds = [];
+    for (let i = 0; i < rankString.length; i += 3) {
+      let traineeId = rankString.substr(i, 2);
+      let traineeGrade = rankString.substr(i+2, 1);
+      setGradeToTrainee(Number(traineeId), traineeGrade)
+    }
+  }
 }
 
 // holds the list of all trainees
 var trainees = [];
 // holds the list of trainees to be shown on the table
 var filteredTrainees = [];
-// holds the ordered list of rankings that the user selects
-var ranking = newRanking();
 // holds true if using japanese
 var isJapanese = false;
 setLang();
 readFromCSV("./trainee_info.csv");
 //getRanking();
 setDate();
+setGrades();
