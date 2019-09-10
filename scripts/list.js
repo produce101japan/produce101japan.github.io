@@ -58,10 +58,10 @@ function renderList(trainee) {
     listTrainee.insertAdjacentHTML("beforeend", renderListEntry(trainee[i]))
     document.getElementById("list__entry-trainee-"+ i)
       .addEventListener("click", function (event) {
-        var currentGrade = getCurrentGrade(getGradeOfTrainee(i));
+        var currentGrade = getGradeOfTrainee(i);
         var hasA = false;
         for (let j = 0; j < trainee.length; j++) {
-          if(getCurrentGrade(getGradeOfTrainee(j)) == "a"){
+          if(getGradeOfTrainee(j) == "a"){
             hasA = true;
             break;
           }
@@ -73,24 +73,25 @@ function renderList(trainee) {
 }
 
 function getGradeOfTrainee(traineeIdToGet){
-  return document.getElementById("list__entry-view-"+ traineeIdToGet).className;
+  var target = document.getElementById("list__entry-view-"+ traineeIdToGet);
+  if(!target){
+    return "no";
+  }
+  var targetClass = target.className;
+  if(targetClass.includes("a-rank")){
+    return "a";
+  }
+  if(targetClass.includes("b-rank")){
+    return "b";
+  }
+  if(targetClass.includes("c-rank")){
+    return "c";
+  }
+  return "no";
 }
 
 function setGradeToTrainee(traineeIdToSet, traineeGradeToSet){
   document.getElementById("list__entry-view-"+traineeIdToSet).className = traineeGradeToSet+"-rank";
-}
-
-function getCurrentGrade(className){
-  if(className.includes("a-rank")){
-    return "a";
-  }
-  if(className.includes("b-rank")){
-    return "b";
-  }
-  if(className.includes("c-rank")){
-    return "c";
-  }
-  return "no";
 }
 
 function toggleGrade(currentGrade, hasA){
@@ -133,20 +134,51 @@ function renderListEntry(trainee) {
 }
 
 const currentURL = "https://produce101japan.github.io/list.html";
+const paramGroupNum = 15;
+const paramGroupDigits = 6;
 // Serializes the ranking into a string and appends that to the current URL
 function generateShareLink() {
   var shareCode= "";
-  for (let j = 0; j < trainees.length; j++) {
-    var grade = getCurrentGrade(document.getElementById("list__entry-view-"+ trainees[j].id).className);
-    if(grade != "no"){
-      shareCode += zeroPadding(j, 2) + grade;
+  var tmpShareNum = 0;
+  for (let j = 0; j < trainees.length + paramGroupNum - (trainees.length % paramGroupNum); j++) {
+    var grade = getGradeOfTrainee(j);
+    tmpShareNum = getGradeNum(grade) +  (tmpShareNum << 2);
+    if((j+1) % paramGroupNum == 0){
+      shareCode += zeroPadding(tmpShareNum.toString(32), paramGroupDigits); // 6 digits
+      tmpShareNum = 0;
     }
   }
-  console.log(shareCode);
-  shareCode = btoa(shareCode);
-  console.log(shareCode.length);
+  console.log(shareCode)
   shareURL = currentURL + "?r=" + shareCode;
   showShareLink(shareURL);
+}
+
+// return max 3 bit num
+function getGradeNum(gradeStr){
+  if(gradeStr == "a"){
+    return 1;
+  }
+  if(gradeStr == "b"){
+    return 2;
+  }
+  if(gradeStr == "c"){
+    return 3;
+  }
+  return 0;
+}
+
+// return max 3 bit num
+function getGradeFromNum(gradeNum){
+  if(gradeNum == 1){
+    return "a";
+  }
+  if(gradeNum == 2){
+    return "b";
+  }
+  if(gradeNum == 3){
+    return "c";
+  }
+  return "no";
 }
 
 function showShareLink(shareURL) {
@@ -183,18 +215,29 @@ function setDate() {
 }
 
 function zeroPadding(num, length){
-  return ('0' + num).slice(-length);
+  var tempNum = num;
+  for(let i = 0;i < length+1; i++){
+    tempNum = '0' + tempNum;
+  }
+  return tempNum.slice(-length);
 }
 
 function setGrades() {
   var urlParams = new URLSearchParams(window.location.search);
   if (urlParams.has("r")) {
-    let rankString = atob(urlParams.get("r")) // decode the saved ranking
+    let rankString = urlParams.get("r")
     let rankingIds = [];
-    for (let i = 0; i < rankString.length; i += 3) {
-      let traineeId = rankString.substr(i, 2);
-      let traineeGrade = rankString.substr(i+2, 1);
-      setGradeToTrainee(Number(traineeId), traineeGrade)
+    let k = 0;
+    for (let i = 0; i < rankString.length; i += paramGroupDigits) {
+      var groupValue = zeroPadding(parseInt(rankString.substr(i, paramGroupDigits), 32).toString(2), paramGroupNum * 2);
+      for (let j = 0; j < groupValue.length; j += 2) {
+        var traineeId = k++;
+        if(traineeId >= trainees.length){
+          break;
+        }
+        var traineeGrade = getGradeFromNum(parseInt(groupValue.substr(j, 2), 2));
+        setGradeToTrainee(traineeId, traineeGrade);
+      }
     }
   }
 }
