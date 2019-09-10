@@ -78,14 +78,13 @@ function renderList(trainee) {
   let listTrainee = document.getElementById("trainee__list");
   for (let i = 0; i < trainee.length; i++) {
     listTrainee.insertAdjacentHTML("beforeend", renderListEntry(trainee[i]))
-  }
-  var entryIcons = document.getElementsByClassName("list__entry-icon");
-  for(let i = 0; i < entryIcons.length; i++){
-    entryIcons[i].addEventListener("click", function (event) {
-      var currentGrade = getCurrentGrade(event.target.className);
-      var nextGrade = toggleGrade(currentGrade);
-      event.target.className = "list__entry-icon-border "+nextGrade+"-rank-border";
-    });
+    document.getElementById("list__entry-trainee-"+ trainee[i].id)
+      .addEventListener("click", function (event) {
+        var currentGrade = getCurrentGrade(event.target.className);
+        var nextGrade = toggleGrade(currentGrade);
+        document.getElementById("list__entry-border-"+trainee[i].id)
+          .className = "list__entry-icon-border "+nextGrade+"-rank-border";
+      });
   }
 }
 
@@ -104,15 +103,15 @@ function getCurrentGrade(className){
 
 function toggleGrade(currentGrade){
   if(currentGrade === "no"){
-    return "a";
-  }
-  if(currentGrade === "a"){
-    return "b";
-  }
-  if(currentGrade === "b"){
     return "c";
   }
   if(currentGrade === "c"){
+    return "b";
+  }
+  if(currentGrade === "b"){
+    return "a";
+  }
+  if(currentGrade === "a"){
     return "no";
   }
 }
@@ -122,11 +121,11 @@ function renderListEntry(trainee) {
   let eliminated = (showEliminated && trainee.eliminated) && "eliminated";
   let top11 = (showTop11 && trainee.top11) && "top11";
   const rankingEntry = `
-  <div class="list__entry ${eliminated}">
+  <div id="list__entry-trainee-${trainee.id}" class="list__entry ${eliminated}">
     <div class="list__entry-view">
       <div class="list__entry-icon">
         <img class="list__entry-img" src="assets/trainees/${trainee.image}" />
-        <div class="list__entry-icon-border no-rank-border"></div>
+        <div id="list__entry-border-${trainee.id}" class="list__entry-icon-border no-rank-border"></div>
       </div>
     </div>
     <div class="list__row-text">
