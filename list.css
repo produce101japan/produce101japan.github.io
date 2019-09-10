@@ -80,26 +80,14 @@
 }
 
 /* Different entry borders */
-.a-rank-border.list__entry-icon-border {
-  border: 6px solid var(--a-rank);
+.a-rank {
+  background-color: var(--a-rank);
 }
-.b-rank-border.list__entry-icon-border {
-  border: 6px solid var(--b-rank);
+.b-rank {
+  background-color: var(--b-rank);
 }
-.c-rank-border.list__entry-icon-border {
-  border: 6px solid var(--c-rank);
-}
-.d-rank-border.list__entry-icon-border {
-  border: 6px solid var(--d-rank);
-}
-.f-rank-border.list__entry-icon-border {
-  border: 6px solid var(--f-rank);
-}
-.x-rank-border.list__entry-icon-border  {
-  border: 6px solid var(--x-rank);
-}
-.eliminated.list__entry-icon-border {
-  border: 6px solid var(--no-rank);
+.c-rank {
+  background-color: var(--c-rank);
 }
 
 @media screen and (max-width: 800px) {

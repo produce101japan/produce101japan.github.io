@@ -80,28 +80,35 @@ function renderList(trainee) {
     listTrainee.insertAdjacentHTML("beforeend", renderListEntry(trainee[i]))
     document.getElementById("list__entry-trainee-"+ trainee[i].id)
       .addEventListener("click", function (event) {
-        var currentGrade = getCurrentGrade(event.target.className);
-        var nextGrade = toggleGrade(currentGrade);
-        document.getElementById("list__entry-border-"+trainee[i].id)
-          .className = "list__entry-icon-border "+nextGrade+"-rank-border";
+        var target = document.getElementById("list__entry-view-"+trainee[i].id);
+        var currentGrade = getCurrentGrade(target.className);
+        var hasA = false;
+        for (let j = 0; j < trainee.length; j++) {
+          if(getCurrentGrade(document.getElementById("list__entry-view-"+ trainee[j].id).className) == "a"){
+            hasA = true;
+            break;
+          }
+        }
+        var nextGrade = toggleGrade(currentGrade, hasA);
+        target.className = nextGrade+"-rank";
       });
   }
 }
 
 function getCurrentGrade(className){
-  if(className.includes("a-rank-border")){
+  if(className.includes("a-rank")){
     return "a";
   }
-  if(className.includes("b-rank-border")){
+  if(className.includes("b-rank")){
     return "b";
   }
-  if(className.includes("c-rank-border")){
+  if(className.includes("c-rank")){
     return "c";
   }
   return "no";
 }
 
-function toggleGrade(currentGrade){
+function toggleGrade(currentGrade, hasA){
   if(currentGrade === "no"){
     return "c";
   }
@@ -109,7 +116,11 @@ function toggleGrade(currentGrade){
     return "b";
   }
   if(currentGrade === "b"){
-    return "a";
+    if(hasA){
+      return "no";
+    }else{
+      return "a";
+    }
   }
   if(currentGrade === "a"){
     return "no";
@@ -122,14 +133,15 @@ function renderListEntry(trainee) {
   let top11 = (showTop11 && trainee.top11) && "top11";
   const rankingEntry = `
   <div id="list__entry-trainee-${trainee.id}" class="list__entry ${eliminated}">
-    <div class="list__entry-view">
-      <div class="list__entry-icon">
-        <img class="list__entry-img" src="assets/trainees/${trainee.image}" />
-        <div id="list__entry-border-${trainee.id}" class="list__entry-icon-border no-rank-border"></div>
+    <div id="list__entry-view-${trainee.id}" class="no-rank">
+      <div class="list__entry-view">
+        <div class="list__entry-icon">
+          <img class="list__entry-img" src="assets/trainees/${trainee.image}" />
+        </div>
       </div>
-    </div>
-    <div class="list__row-text">
-      <div class="name">${isJapanese?trainee.name_japanese:trainee.name_romanized}</div>
+      <div class="list__row-text">
+        <div class="name">${isJapanese?trainee.name_japanese:trainee.name_romanized}</div>
+      </div>
     </div>
   </div>`;
   return rankingEntry;
