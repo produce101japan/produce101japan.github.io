@@ -26,7 +26,7 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 3px;
+  padding-top: 3px;
 }
 .list__entry-icon {
   border-radius: 50%;
