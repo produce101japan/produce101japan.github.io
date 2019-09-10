@@ -242,6 +242,12 @@ function setGrades() {
   }
 }
 
+function resetAll(){
+ for (let i = 0; i < trainees.length; i++) {
+   setGradeToTrainee(i, "no");
+ }
+}
+
 // holds the list of all trainees
 var trainees = [];
 // holds the list of trainees to be shown on the table
