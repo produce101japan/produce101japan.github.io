@@ -1,40 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-
-    gtag('config', 'UA-122340888-1');
-  </script>
-
-  <meta charset="utf-8" />
+  <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <meta name="google-site-verification" content="7p1WafVpQTLkZyuTgblWByOqOKhbZ05coC5oHC3f8b0" />
-  <meta property="og:title" content="Produce 101 Japan 推しMENメーカー" />
-  <meta property="og:url" content="https://produce101japan.github.io" />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://produce101japan.github.io/assets/thumbnail2.png" />
+  <meta name="google-site-verification" content="7p1WafVpQTLkZyuTgblWByOqOKhbZ05coC5oHC3f8b0"/>
+  <meta property="og:title" content="Produce 101 Japan 推しMENメーカー"/>
+  <meta property="og:url" content="https://produce101japan.github.io"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://produce101japan.github.io/assets/thumbnail2.png"/>
   <meta name="twitter:card" content="summary">
   <meta name="twitter:site" content="@ai_var_">
   <meta name="twitter:title" content="Produce 101 Japan 推しMENメーカー">
   <meta name="twitter:image" content="https://produce101japan.github.io/assets/thumbnail2.png">
 
   <link rel="icon" href="assets/pickme.png">
-  <link rel="stylesheet" type="text/css" media="screen" href="styles.css?201909090210" />
+  <link rel="stylesheet" type="text/css" media="screen" href="styles.css?201909090210"/>
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Roboto+Condensed:400,700"
         rel="stylesheet">
   <title>Produce 101 Japan 推しMENメーカー</title>
 </head>
 <body>
 <div id="top-banner">
-  <a href="/"><img id="banner-image" src="assets/logo.svg" /></a>
+  <a href="/"><img id="banner-image" src="assets/logo.svg"/></a>
   <p id="banner-title">PRODUCE 101 JAPAN</p>
   <p id="banner-subtitle">推しMENメーカー</p>
 </div>
@@ -45,7 +33,7 @@
     </div>
     <div id="table">
       <div id="table__filter-container">
-        <input id="table__filter-input" oninput="filterTrainees(event)" type="text" placeholder="Search" />
+        <input id="table__filter-input" oninput="filterTrainees(event)" type="text" placeholder="Search"/>
       </div>
       <div id="table__entry-container">
         <!-- <div class="table__entry">
@@ -66,21 +54,21 @@
       <div id="filters-header"><strong>Filters</strong></div>
       <div>
         <input type="checkbox" name="show-eliminated" id="show-eliminated"
-               onclick="showEliminatedClick(event)" />
+               onclick="showEliminatedClick(event)"/>
         <label class="checkbox-label" for="show-eliminated">Show Eliminated (At Bottom)</label>
       </div>
       <div>
-        <input type="checkbox" name="show-top11" id="show-top11" onclick="showTop11Click(event)" />
+        <input type="checkbox" name="show-top11" id="show-top11" onclick="showTop11Click(event)"/>
         <label class="checkbox-label" for="show-top11">Show Current Top 10</label>
       </div>
     </div>
     <div id="sharelink-container">
       <!-- button -->
-      <input type="button" id="getlink-button" value="Get link" onclick="generateShareLink()" />
+      <input type="button" id="getlink-button" value="Get link" onclick="generateShareLink()"/>
       <!-- text box -->
-      <input type="text" placeholder="http://" id="getlink-textbox" readonly />
+      <input type="text" placeholder="http://" id="getlink-textbox" readonly/>
       <!-- button in text box -->
-      <input type="button" id="copylink-button" value="Copy" onclick="copyLink()" />
+      <input type="button" id="copylink-button" value="Copy" onclick="copyLink()"/>
     </div>
   </div>
   <div id="ranking__pyramid">
@@ -106,8 +94,14 @@
 </div>
 <footer>
   <p>switch to <a href="?lang=en">English</a> | <a href="?lang=ja">日本語</a></p>
-  <p><a href="https://produce48.github.io/">produce48</a> <a href="https://producex101.github.io/producex101/">producex101</a></p>
-  <!--<p id="switch_lang"><a href="?lang=en">switch to ENGLISH</a></p>-->
+  <p><a href="/">推しMENメーカー</a> | <a href="https://produce48.github.io/">produce48</a> | <a
+      href="https://producex101.github.io/producex101/">producex101</a>
+  </p>
+  <p>
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+       data-url="https://produce101japan.github.io" data-hashtags="推しMENメーカー,PRODUCE101JAPAN" data-show-count="false">Tweet</a>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </p>
 </footer>
 
 <!-- Load in script files -->
