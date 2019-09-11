@@ -3,7 +3,9 @@
 }
 
 #trainee__table #current_date{
-  margin: 0 10px 0 0;
+  margin: auto;
+  max-width: 800px;
+  text-align: right;
 }
 
 #trainee__list {
@@ -104,6 +106,11 @@
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
   font-weight: 700;
+}
+
+#tool-container {
+  max-width: 800px;
+  margin: auto;
 }
 
 #how-to-use{

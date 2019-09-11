@@ -80,32 +80,34 @@
       <label class="checkbox-label" for="show-top11">Show Current Top 10</label>
     </div>
   </div>
-  <div id="sharelink-container">
-    <!-- button -->
-    <input type="button" id="getlink-button" value="Get link" onclick="generateShareLink()"/>
-    <!-- text box -->
-    <input type="text" placeholder="http://" id="getlink-textbox" readonly/>
-    <!-- button in text box -->
-    <input type="button" id="copylink-button" value="Copy" onclick="copyLink()"/>
-  </div>
-  <div id="how-to-use">
-    <p>使い方～How to use～</p>
-    <ul>
-      <li>画像クリックで<span class="c-rank">気になる</span>→<span class="b-rank">推し</span>→<span class="a-rank">最推し</span>の順で変化します
-      </li>
-      <li class="en">Change to <span class="c-rank">favorite</span>→<span class="b-rank">pick</span>→<span
-          class="a-rank">1pick</span> by clicking image
-      </li>
-      <li><span class="a-rank">最推し</span>は一人のみ</li>
-      <li class="en">Pick only one for <span class="a-rank">1pick</span></li>
-      <li>スクショするかGet LinkでURLを取得できます</li>
-      <li class="en">Take a screenshoot or get link with a button</li>
-      <li>Resetで初めから</li>
-      <li class="en">Reset all with Reset button</li>
-    </ul>
-  </div>
-  <div id="create-new-container">
-    <input type="button" id="create-new-button" value="Reset" onclick="resetAll()"/>
+  <div id="tool-container">
+    <div id="sharelink-container">
+      <!-- button -->
+      <input type="button" id="getlink-button" value="Get link" onclick="generateShareLink()"/>
+      <!-- text box -->
+      <input type="text" placeholder="http://" id="getlink-textbox" readonly/>
+      <!-- button in text box -->
+      <input type="button" id="copylink-button" value="Copy" onclick="copyLink()"/>
+    </div>
+    <div id="how-to-use">
+      <p>使い方～How to use～</p>
+      <ul>
+        <li>画像クリックで<span class="c-rank">気になる</span>→<span class="b-rank">推し</span>→<span class="a-rank">最推し</span>の順で変化します
+        </li>
+        <li class="en">Change to <span class="c-rank">favorite</span>→<span class="b-rank">pick</span>→<span
+            class="a-rank">1pick</span> by clicking image
+        </li>
+        <li><span class="a-rank">最推し</span>は一人のみ</li>
+        <li class="en">Pick only one for <span class="a-rank">1pick</span></li>
+        <li>スクショするかGet LinkでURLを取得できます</li>
+        <li class="en">Take a screenshoot or get link with a button</li>
+        <li>Resetで初めから</li>
+        <li class="en">Reset all with Reset button</li>
+      </ul>
+    </div>
+    <div id="create-new-container">
+      <input type="button" id="create-new-button" value="Reset" onclick="resetAll()"/>
+    </div>
   </div>
 </div>
 <footer>
@@ -115,7 +117,8 @@
   </p>
   <p>
     <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
-       data-url="https://produce101japan.github.io/list.html" data-hashtags="推しMENリスト,PRODUCE101JAPAN" data-show-count="false">Tweet</a>
+       data-url="https://produce101japan.github.io/list.html" data-hashtags="推しMENリスト,PRODUCE101JAPAN"
+       data-show-count="false">Tweet</a>
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   </p>
 </footer>
