@@ -399,6 +399,10 @@ function setLang() {
   }else{
     isJapanese = (window.navigator.userLanguage || window.navigator.language || window.navigator.browserLanguage).substr(0,2) == "ja" ;
   }
+
+  if(isJapanese){
+    document.documentElement.lang = "ja";
+  }
 }
 
 function setDate() {
