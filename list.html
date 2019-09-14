@@ -70,15 +70,10 @@
   </div>
   <p>
   <div id="filters-container">
-    <div id="filters-header"><strong>Filters</strong></div>
-    <div>
+    <div class="filters-container__entry">
       <input type="checkbox" name="show-eliminated" id="show-eliminated"
              onclick="showEliminatedClick(event)"/>
-      <label class="checkbox-label" for="show-eliminated">Show Eliminated (At Bottom)</label>
-    </div>
-    <div>
-      <input type="checkbox" name="show-top11" id="show-top11" onclick="showTop11Click(event)"/>
-      <label class="checkbox-label" for="show-top11">Show Current Top 10</label>
+      <label class="checkbox-label" for="show-eliminated">脱落者表示 - Show Eliminated</label>
     </div>
   </div>
   <div id="tool-container">
@@ -126,7 +121,6 @@
 
 <!-- Load in script files -->
 <script src="scripts/csv.js"></script>
-<script src="scripts/traineesort.js"></script>
 <script src="scripts/list.js?201909142230"></script>
 
 </body>

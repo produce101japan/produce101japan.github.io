@@ -95,9 +95,8 @@ function toggleGrade(currentGrade, hasA){
 }
 
 function renderListEntry(trainee) {
-  let eliminated = (showEliminated && trainee.eliminated) && "eliminated";
   const rankingEntry = `
-  <div id="list__entry-trainee-${trainee.id}" class="list__entry ${eliminated}">
+  <div id="list__entry-trainee-${trainee.id}" class="list__entry" data-isEliminated="${trainee.eliminated}">
     <div id="list__entry-view-${trainee.id}" class="no-rank">
       <div class="list__entry-view">
         <div class="list__entry-icon">
@@ -229,6 +228,23 @@ function resetAll(){
  for (let i = 0; i < trainees.length; i++) {
    setGradeToTrainee(i, "no");
  }
+}
+
+// Event handler for when user checks show eliminated
+function showEliminatedClick(event) {
+  console.log(event);
+  let checkbox = event.target;
+  if (checkbox.checked) {
+      for (let i = 0; i < trainees.length; i++) {
+        if(document.getElementById("list__entry-trainee-"+i).getAttribute("data-isEliminated") == "true" ){
+          document.getElementById("list__entry-trainee-"+i).className = "list__entry eliminated";
+        }
+      }
+  } else {
+      for (let i = 0; i < trainees.length; i++) {
+          document.getElementById("list__entry-trainee-"+i).className = "list__entry";
+      }
+  }
 }
 
 // holds the list of all trainees
