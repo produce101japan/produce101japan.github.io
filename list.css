@@ -130,8 +130,8 @@
 
 @media screen and (max-width: 800px) {
   #trainee__table {
-    transform: scale(0.9);
-    margin: -60px -40px;
+    transform: scale(0.85);
+    margin: -90px -60px;
   }
 }
 
