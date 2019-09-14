@@ -16,21 +16,6 @@ function readFromCSV(path) {
 }
 
 // Takes in an array of trainees and converts it to js objects
-// Follows this schema:
-/*
-trainee: {
-  id: ... // position in csv used for simple recognition
-  name_romanized: ...
-  name_hangul: ...
-  name_japanese: ...
-  company: ...
-  grade: a/b/c/d/f
-  image: ...
-  selected: false/true // whether user selected them
-  eliminated: false/true
-  top11: false/true
-}
-*/
 function convertCSVArrayToTraineeData(csvArrays) {
   trainees = csvArrays.map(function(traineeArray, index) {
     trainee = {};
@@ -38,11 +23,9 @@ function convertCSVArrayToTraineeData(csvArrays) {
     trainee.image = traineeArray[0] + ".jpg";
     trainee.name_romanized = traineeArray[1];
     trainee.name_japanese = traineeArray[2];
-    //unused
-    trainee.company = traineeArray[4];
     trainee.grade = traineeArray[5];
-    trainee.eliminated = traineeArray[7] === 'e'; // sets trainee to be eliminated if 'e' appears in 6th col
-    trainee.top11 = traineeArray[8] === 't'; // sets trainee to top 11 if 't' appears in 6th column
+    //unused
+    trainee.eliminated = false; // sets trainee to be eliminated if 'e' appears in 6th col
     return trainee;
   });
   filteredTrainees = trainees;
