@@ -25,7 +25,6 @@ trainee: {
   name_japanese: ...
   company: ...
   grade: a/b/c/d/f
-  birthyear: ...
   image: ...
   selected: false/true // whether user selected them
   eliminated: false/true
@@ -35,16 +34,15 @@ trainee: {
 function convertCSVArrayToTraineeData(csvArrays) {
   trainees = csvArrays.map(function(traineeArray, index) {
     trainee = {};
+    trainee.id = index
     trainee.image = traineeArray[0] + ".jpg";
     trainee.name_romanized = traineeArray[1];
-    trainee.name_hangul = traineeArray[1];
     trainee.name_japanese = traineeArray[2];
+    //unused
     trainee.company = traineeArray[4];
     trainee.grade = traineeArray[5];
-    trainee.birthyear = traineeArray[6];
     trainee.eliminated = traineeArray[7] === 'e'; // sets trainee to be eliminated if 'e' appears in 6th col
     trainee.top11 = traineeArray[8] === 't'; // sets trainee to top 11 if 't' appears in 6th column
-    trainee.id = index
     return trainee;
   });
   filteredTrainees = trainees;
@@ -114,9 +112,7 @@ function toggleGrade(currentGrade, hasA){
 }
 
 function renderListEntry(trainee) {
-  let modifiedCompany = trainee.company;
   let eliminated = (showEliminated && trainee.eliminated) && "eliminated";
-  let top11 = (showTop11 && trainee.top11) && "top11";
   const rankingEntry = `
   <div id="list__entry-trainee-${trainee.id}" class="list__entry ${eliminated}">
     <div id="list__entry-view-${trainee.id}" class="no-rank">

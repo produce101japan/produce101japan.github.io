@@ -61,7 +61,6 @@ function getRanking() {
 trainee: {
   id: ... // position in csv used for simple recognition
   name_romanized: ...
-  name_hangul: ...
   name_japanese: ...
   company: ...
   grade: a/b/c/d/f
@@ -75,16 +74,15 @@ trainee: {
 function convertCSVArrayToTraineeData(csvArrays) {
   trainees = csvArrays.map(function(traineeArray, index) {
     trainee = {};
+    trainee.id = parseInt(traineeArray[0].split('_')[0]); // trainee id is the original ordering of the trainees in the first csv
     trainee.image = traineeArray[0] + ".jpg";
     trainee.name_romanized = traineeArray[1];
-    trainee.name_hangul = traineeArray[1];
     trainee.name_japanese = traineeArray[2];
-    trainee.company = traineeArray[4];
     trainee.grade = traineeArray[5];
-    trainee.birthyear = traineeArray[6];
-    trainee.eliminated = traineeArray[7] === 'e'; // sets trainee to be eliminated if 'e' appears in 6th col
-    trainee.top11 = traineeArray[8] === 't'; // sets trainee to top 11 if 't' appears in 6th column
-    trainee.id = parseInt(traineeArray[0].split('_')[0]); // trainee id is the original ordering of the trainees in the first csv
+    // unused
+    trainee.company = traineeArray[4];
+    trainee.eliminated = false; // sets trainee to be eliminated if 'e' appears in 6th col
+    trainee.top11 = false; // sets trainee to top 11 if 't' appears in 6th column
     return trainee;
   });
   filteredTrainees = trainees;
@@ -188,7 +186,7 @@ function populateTableEntry(trainee) {
     <div class="table__entry-text">
       <span class="name"><strong>${isJapanese?trainee.name_japanese:trainee.name_romanized}</strong></span>
       <span class="hangul">(${isJapanese?trainee.name_romanized:trainee.name_japanese})</span>
-      <!-- <span class="companyandyear">${trainee.company} • ${trainee.birthyear}</span> -->
+      <!-- <span class="companyandyear"></span> -->
     </div>
   </div>`;
   return tableEntry;
@@ -239,11 +237,6 @@ const abbreviatedCompanies = {
 }
 
 function populateRankingEntry(trainee, currRank) {
-  let modifiedCompany = trainee.company;
-//  modifiedCompany = modifiedCompany.replace("ENTERTAINMENT", "ENT.");
-  if (abbreviatedCompanies[modifiedCompany]) {
-    modifiedCompany = abbreviatedCompanies[modifiedCompany];
-  }
   let eliminated = (showEliminated && trainee.eliminated) && "eliminated";
   let top11 = (showTop11 && trainee.top11) && "top11";
   const rankingEntry = `
@@ -260,7 +253,6 @@ function populateRankingEntry(trainee, currRank) {
     </div>
     <div class="ranking__row-text">
       <div class="name"><strong>${isJapanese?trainee.name_japanese:trainee.name_romanized}</strong></div>
-      <!-- <div class="company">${modifiedCompany}</div> -->
     </div>
   </div>`;
   return rankingEntry;
@@ -323,8 +315,6 @@ function filterTrainees(event) {
   // filters trainees based on name, alternate names, and company
   filteredTrainees = trainees.filter(function (trainee) {
     let initialMatch = includesIgnCase(trainee.name_romanized, filterText)
-      // || includesIgnCase(trainee.company, filterText)
-      || includesIgnCase(trainee.name_hangul, filterText)
       || includesIgnCase(trainee.name_japanese, filterText);
     // if alernates exists then check them as well
     let alternateMatch = false;
