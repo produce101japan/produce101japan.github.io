@@ -37,6 +37,11 @@ body {
   background-color: white;
 }
 
+// reset iOS button design
+&[type="button"], &[type="submit"] {
+    -webkit-appearance: none;
+}
+
 /* Styles for banner */
 #top-banner {
   background: radial-gradient(circle, var(--banner-bg-start), var(--banner-bg-end) 80%);
