@@ -63,9 +63,10 @@ function convertCSVArrayToTraineeData(csvArrays) {
     trainee.image = traineeArray[0] + ".jpg";
     trainee.name_romanized = traineeArray[1];
     trainee.name_japanese = traineeArray[2];
+    trainee.rank = traineeArray[4] || 1;
+    trainee.eliminated = trainee.rank > currentBorder; // t if eliminated
     trainee.grade = traineeArray[5];
     // unused
-    trainee.eliminated = false; // sets trainee to be eliminated if 'e' appears in 6th col
     trainee.top11 = false; // sets trainee to top 11 if 't' appears in 6th column
     return trainee;
   });
@@ -394,6 +395,7 @@ function zeroPadding(num,length){
   return ('0' + num).slice(-length);
 }
 
+var currentBorder = 98;
 // holds the list of all trainees
 var trainees = [];
 // holds the list of trainees to be shown on the table

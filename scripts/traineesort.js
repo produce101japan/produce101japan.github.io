@@ -2,7 +2,7 @@
 
 // always initially sort by id
 var activeCompares = [idCompare]
-var showEliminated = false;
+var showEliminated = true;
 var showTop11 = false;
 
 // This a compare by id on the trainees and guarantees stability of the sort
@@ -23,6 +23,17 @@ function eliminatedAtBottomCompare(trainee1, trainee2) {
   }
   else if (!trainee1.eliminated && trainee2.eliminated) {
     return -1;
+  }
+  return 0;
+}
+
+// compare by whether trainee is eliminated and put eliminated at bottom
+function rankCompare(trainee1, trainee2) {
+  if (trainee1.rank < trainee2.rank) {
+    return -1;
+  }
+  else if (trainee1.rank > trainee2.rank) {
+    return 1;
   }
   return 0;
 }
@@ -51,13 +62,28 @@ function showEliminatedClick(event) {
   console.log(event);
   let checkbox = event.target;
   if (checkbox.checked) {
-    activeCompares.push(eliminatedAtBottomCompare);
+    //activeCompares.push(eliminatedAtBottomCompare);
     showEliminated = true;
   } else {
     // remove the show eliminated compare
-    let i = activeCompares.indexOf(eliminatedAtBottomCompare)
-    if (i >= 0) activeCompares.splice(i, 1);
+    //let i = activeCompares.indexOf(eliminatedAtBottomCompare)
+    //if (i >= 0) activeCompares.splice(i, 1);
     showEliminated = false;
+  }
+  sortRenderTable();
+  rerenderRanking();
+}
+
+// Event handler for when user checks show eliminated
+function sortByRank(event) {
+  console.log(event);
+  let checkbox = event.target;
+  if (checkbox.checked) {
+    activeCompares.push(rankCompare);
+  } else {
+    // remove the show eliminated compare
+    let i = activeCompares.indexOf(rankCompare)
+    if (i >= 0) activeCompares.splice(i, 1);
   }
   sortRenderTable();
   rerenderRanking();

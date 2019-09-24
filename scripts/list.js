@@ -23,9 +23,9 @@ function convertCSVArrayToTraineeData(csvArrays) {
     trainee.image = traineeArray[0] + ".jpg";
     trainee.name_romanized = traineeArray[1];
     trainee.name_japanese = traineeArray[2];
+    trainee.rank = traineeArray[4] || 1;
+    trainee.eliminated = trainee.rank > currentBorder; // t if eliminated
     trainee.grade = traineeArray[5];
-    //unused
-    trainee.eliminated = false; // sets trainee to be eliminated if 'e' appears in 6th col
     return trainee;
   });
   filteredTrainees = trainees;
@@ -95,8 +95,9 @@ function toggleGrade(currentGrade, hasA){
 }
 
 function renderListEntry(trainee) {
+  var eliminatedClass = trainee.eliminated && "eliminated";
   const rankingEntry = `
-  <div id="list__entry-trainee-${trainee.id}" class="list__entry" data-isEliminated="${trainee.eliminated}">
+  <div id="list__entry-trainee-${trainee.id}" class="list__entry ${eliminatedClass}" data-isEliminated="${trainee.eliminated}">
     <div id="list__entry-view-${trainee.id}" class="no-rank">
       <div class="list__entry-view">
         <div class="list__entry-icon">
@@ -247,6 +248,7 @@ function showEliminatedClick(event) {
   }
 }
 
+var currentBorder = 98;
 // holds the list of all trainees
 var trainees = [];
 // holds the list of trainees to be shown on the table
