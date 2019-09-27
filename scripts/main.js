@@ -63,7 +63,7 @@ function convertCSVArrayToTraineeData(csvArrays) {
     trainee.image = traineeArray[0] + ".jpg";
     trainee.name_romanized = traineeArray[1];
     trainee.name_japanese = traineeArray[2];
-    trainee.rank = traineeArray[4] || 1;
+    trainee.rank = traineeArray[6] || 1;
     trainee.eliminated = trainee.rank > currentBorder; // t if eliminated
     trainee.grade = traineeArray[5];
     // unused
