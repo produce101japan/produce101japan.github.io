@@ -4,7 +4,7 @@ function readFromCSV(path) {
   rawFile.open("GET", path, false);
   rawFile.onreadystatechange = function() {
     if (rawFile.readyState === 4) {
-      if (rawFile.status === 200 || rawFile.status == 0) {
+      if (rawFile.status === 200 || rawFile.status === 0) {
         let allText = rawFile.responseText;
         let out = CSV.parse(allText);
         let trainees = convertCSVArrayToTraineeData(out);
@@ -42,7 +42,7 @@ function renderList(trainee) {
         var currentGrade = getGradeOfTrainee(i);
         var hasA = false;
         for (let j = 0; j < trainee.length; j++) {
-          if(getGradeOfTrainee(j) == "a"){
+          if(getGradeOfTrainee(j) === "a"){
             hasA = true;
             break;
           }
@@ -134,13 +134,13 @@ function generateShareLink() {
 
 // return max 3 bit num
 function getGradeNum(gradeStr){
-  if(gradeStr == "a"){
+  if(gradeStr === "a"){
     return 1;
   }
-  if(gradeStr == "b"){
+  if(gradeStr === "b"){
     return 2;
   }
-  if(gradeStr == "c"){
+  if(gradeStr === "c"){
     return 3;
   }
   return 0;
@@ -148,13 +148,13 @@ function getGradeNum(gradeStr){
 
 // return max 3 bit num
 function getGradeFromNum(gradeNum){
-  if(gradeNum == 1){
+  if(gradeNum === 1){
     return "a";
   }
-  if(gradeNum == 2){
+  if(gradeNum === 2){
     return "b";
   }
-  if(gradeNum == 3){
+  if(gradeNum === 3){
     return "c";
   }
   return "no";
@@ -176,9 +176,9 @@ function copyLink() {
 function setLang() {
   var urlParams = new URLSearchParams(window.location.search)
   if(urlParams.get("lang")){
-    isJapanese = urlParams.get("lang") == "ja"
+    isJapanese = urlParams.get("lang") === "ja"
   }else{
-    isJapanese = (window.navigator.userLanguage || window.navigator.language || window.navigator.browserLanguage).substr(0,2) == "ja" ;
+    isJapanese = (window.navigator.userLanguage || window.navigator.language || window.navigator.browserLanguage).substr(0,2) === "ja" ;
   }
 
   if(isJapanese){
@@ -237,7 +237,7 @@ function showEliminatedClick(event) {
   let checkbox = event.target;
   if (checkbox.checked) {
       for (let i = 0; i < trainees.length; i++) {
-        if(document.getElementById("list__entry-trainee-"+i).getAttribute("data-isEliminated") == "true" ){
+        if(document.getElementById("list__entry-trainee-"+i).getAttribute("data-isEliminated") === "true" ){
           document.getElementById("list__entry-trainee-"+i).className = "list__entry eliminated";
         }
       }
