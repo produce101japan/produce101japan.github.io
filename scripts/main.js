@@ -4,7 +4,7 @@ function readFromCSV(path) {
   rawFile.open("GET", path, false);
   rawFile.onreadystatechange = function() {
     if (rawFile.readyState === 4) {
-      if (rawFile.status === 200 || rawFile.status == 0) {
+      if (rawFile.status === 200 || rawFile.status === 0) {
         let allText = rawFile.responseText;
         let out = CSV.parse(allText);
         let trainees = convertCSVArrayToTraineeData(out);
@@ -28,7 +28,7 @@ function findTraineeById(id) {
 function getRanking() {
   var urlParams = new URLSearchParams(window.location.search);
   if (urlParams.has("r")) {
-    let rankString = atob(urlParams.get("r")) // decode the saved ranking
+    let rankString = atob(urlParams.get("r")); // decode the saved ranking
     let rankingIds = [];
     for (let i = 0; i < rankString.length; i += 2) {
       let traineeId = rankString.substr(i, 2); // get each id of the trainee by substringing every 2 chars
@@ -41,7 +41,7 @@ function getRanking() {
       if (traineeId < 0) {
         ranking[i] = newTrainee();
       } else {
-        let trainee = findTraineeById(rankingIds[i])
+        let trainee = findTraineeById(rankingIds[i]);
         // let trainee = trainees[rankingIds[i]];
         trainee.selected = true;
         ranking[i] = trainee;
@@ -63,9 +63,10 @@ function convertCSVArrayToTraineeData(csvArrays) {
     trainee.image = traineeArray[0] + ".jpg";
     trainee.name_romanized = traineeArray[1];
     trainee.name_japanese = traineeArray[2];
-    trainee.grade = traineeArray[5];
+    trainee.rank = traineeArray[4] || 1;
+    trainee.eliminated = trainee.rank > currentBorder; // t if eliminated
+    trainee.grade = "f";
     // unused
-    trainee.eliminated = false; // sets trainee to be eliminated if 'e' appears in 6th col
     trainee.top11 = false; // sets trainee to top 11 if 't' appears in 6th column
     return trainee;
   });
@@ -344,8 +345,7 @@ const currentURL = "https://produce101japan.github.io/";
 // Serializes the ranking into a string and appends that to the current URL
 function generateShareLink() {
   let shareCode = ranking.map(function (trainee) {
-    let twoCharID = ("0" + trainee.id).slice(-2); // adds a zero to front of digit if necessary e.g 1 --> 01
-    return twoCharID;
+    return ("0" + trainee.id).slice(-2);
   }).join("");
   console.log(shareCode);
   shareCode = btoa(shareCode);
@@ -367,11 +367,11 @@ function copyLink() {
 }
 
 function setLang() {
-  var urlParams = new URLSearchParams(window.location.search)
+  var urlParams = new URLSearchParams(window.location.search);
   if(urlParams.get("lang")){
-    isJapanese = urlParams.get("lang") == "ja"
+    isJapanese = urlParams.get("lang") === "ja"
   }else{
-    isJapanese = (window.navigator.userLanguage || window.navigator.language || window.navigator.browserLanguage).substr(0,2) == "ja" ;
+    isJapanese = (window.navigator.userLanguage || window.navigator.language || window.navigator.browserLanguage).substr(0,2) === "ja" ;
   }
 
   if(isJapanese){
@@ -394,6 +394,7 @@ function zeroPadding(num,length){
   return ('0' + num).slice(-length);
 }
 
+var currentBorder = 98;
 // holds the list of all trainees
 var trainees = [];
 // holds the list of trainees to be shown on the table
@@ -406,7 +407,7 @@ var isJapanese = false;
 setLang();
 //window.addEventListener("load", function () {
   populateRanking();
-  readFromCSV("./trainee_info.csv");
+  readFromCSV("./trainee_info.csv?201909280132");
 //});
 // checks the URL for a ranking and uses it to populate ranking
 getRanking();

@@ -107,11 +107,14 @@ body {
 #filters-container {
   max-width: 800px;
   margin: auto;
-  display: none;
 }
 
 .filters-container__entry{
   margin: 5px 10px;
+}
+
+.filters-container__entry.top11{
+  display: none;
 }
 
 .checkbox-label {

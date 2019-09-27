@@ -4,7 +4,7 @@ function readFromCSV(path) {
   rawFile.open("GET", path, false);
   rawFile.onreadystatechange = function() {
     if (rawFile.readyState === 4) {
-      if (rawFile.status === 200 || rawFile.status == 0) {
+      if (rawFile.status === 200 || rawFile.status === 0) {
         let allText = rawFile.responseText;
         let out = CSV.parse(allText);
         let trainees = convertCSVArrayToTraineeData(out);
@@ -19,13 +19,13 @@ function readFromCSV(path) {
 function convertCSVArrayToTraineeData(csvArrays) {
   trainees = csvArrays.map(function(traineeArray, index) {
     trainee = {};
-    trainee.id = index
+    trainee.id = index;
     trainee.image = traineeArray[0] + ".jpg";
     trainee.name_romanized = traineeArray[1];
     trainee.name_japanese = traineeArray[2];
-    trainee.grade = traineeArray[5];
-    //unused
-    trainee.eliminated = false; // sets trainee to be eliminated if 'e' appears in 6th col
+    trainee.rank = traineeArray[4] || 1;
+    trainee.eliminated = trainee.rank > currentBorder; // t if eliminated
+    trainee.grade = "f";
     return trainee;
   });
   filteredTrainees = trainees;
@@ -42,7 +42,7 @@ function renderList(trainee) {
         var currentGrade = getGradeOfTrainee(i);
         var hasA = false;
         for (let j = 0; j < trainee.length; j++) {
-          if(getGradeOfTrainee(j) == "a"){
+          if(getGradeOfTrainee(j) === "a"){
             hasA = true;
             break;
           }
@@ -95,8 +95,9 @@ function toggleGrade(currentGrade, hasA){
 }
 
 function renderListEntry(trainee) {
+  var eliminatedClass = trainee.eliminated && "eliminated";
   const rankingEntry = `
-  <div id="list__entry-trainee-${trainee.id}" class="list__entry" data-isEliminated="${trainee.eliminated}">
+  <div id="list__entry-trainee-${trainee.id}" class="list__entry ${eliminatedClass}" data-isEliminated="${trainee.eliminated}">
     <div id="list__entry-view-${trainee.id}" class="no-rank">
       <div class="list__entry-view">
         <div class="list__entry-icon">
@@ -133,13 +134,13 @@ function generateShareLink() {
 
 // return max 3 bit num
 function getGradeNum(gradeStr){
-  if(gradeStr == "a"){
+  if(gradeStr === "a"){
     return 1;
   }
-  if(gradeStr == "b"){
+  if(gradeStr === "b"){
     return 2;
   }
-  if(gradeStr == "c"){
+  if(gradeStr === "c"){
     return 3;
   }
   return 0;
@@ -147,13 +148,13 @@ function getGradeNum(gradeStr){
 
 // return max 3 bit num
 function getGradeFromNum(gradeNum){
-  if(gradeNum == 1){
+  if(gradeNum === 1){
     return "a";
   }
-  if(gradeNum == 2){
+  if(gradeNum === 2){
     return "b";
   }
-  if(gradeNum == 3){
+  if(gradeNum === 3){
     return "c";
   }
   return "no";
@@ -175,9 +176,9 @@ function copyLink() {
 function setLang() {
   var urlParams = new URLSearchParams(window.location.search)
   if(urlParams.get("lang")){
-    isJapanese = urlParams.get("lang") == "ja"
+    isJapanese = urlParams.get("lang") === "ja"
   }else{
-    isJapanese = (window.navigator.userLanguage || window.navigator.language || window.navigator.browserLanguage).substr(0,2) == "ja" ;
+    isJapanese = (window.navigator.userLanguage || window.navigator.language || window.navigator.browserLanguage).substr(0,2) === "ja" ;
   }
 
   if(isJapanese){
@@ -236,7 +237,7 @@ function showEliminatedClick(event) {
   let checkbox = event.target;
   if (checkbox.checked) {
       for (let i = 0; i < trainees.length; i++) {
-        if(document.getElementById("list__entry-trainee-"+i).getAttribute("data-isEliminated") == "true" ){
+        if(document.getElementById("list__entry-trainee-"+i).getAttribute("data-isEliminated") === "true" ){
           document.getElementById("list__entry-trainee-"+i).className = "list__entry eliminated";
         }
       }
@@ -247,6 +248,7 @@ function showEliminatedClick(event) {
   }
 }
 
+var currentBorder = 98;
 // holds the list of all trainees
 var trainees = [];
 // holds the list of trainees to be shown on the table
@@ -254,7 +256,7 @@ var filteredTrainees = [];
 // holds true if using japanese
 var isJapanese = false;
 setLang();
-readFromCSV("./trainee_info.csv");
+readFromCSV("./trainee_info.csv?201909280132");
 //getRanking();
 setDate();
 setGrades();
