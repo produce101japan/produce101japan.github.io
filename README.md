@@ -8,5 +8,5 @@ Original creator: @produce48 & @producex101
 | 0 | id for image |
 | 1 | name |
 | 2 | japanese name |
-| 5 | grade |
-| 6 | rank |
+| 3 | grade |
+| 4 | rank |
