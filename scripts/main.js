@@ -65,7 +65,7 @@ function convertCSVArrayToTraineeData(csvArrays) {
     trainee.name_japanese = traineeArray[2];
     trainee.rank = traineeArray[4] || 1;
     trainee.eliminated = trainee.rank > currentBorder; // t if eliminated
-    trainee.grade = "f";
+    trainee.grade = traineeArray[3];
     // unused
     trainee.top11 = false; // sets trainee to top 11 if 't' appears in 6th column
     return trainee;
@@ -407,7 +407,7 @@ var isJapanese = false;
 setLang();
 //window.addEventListener("load", function () {
   populateRanking();
-  readFromCSV("./trainee_info.csv?201909280132");
+  readFromCSV("./trainee_info.csv?201910121652");
 //});
 // checks the URL for a ranking and uses it to populate ranking
 getRanking();
