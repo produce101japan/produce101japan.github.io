@@ -407,7 +407,7 @@ var isJapanese = false;
 setLang();
 //window.addEventListener("load", function () {
   populateRanking();
-  readFromCSV("./trainee_info.csv?201910121652");
+  readFromCSV("./trainee_info.csv?2019102521");
 //});
 // checks the URL for a ranking and uses it to populate ranking
 getRanking();
