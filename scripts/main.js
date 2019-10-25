@@ -394,7 +394,7 @@ function zeroPadding(num,length){
   return ('0' + num).slice(-length);
 }
 
-var currentBorder = 98;
+var currentBorder = 60;
 // holds the list of all trainees
 var trainees = [];
 // holds the list of trainees to be shown on the table
