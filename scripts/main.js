@@ -394,7 +394,7 @@ function zeroPadding(num,length){
   return ('0' + num).slice(-length);
 }
 
-var currentBorder = 60;
+var currentBorder = 35;
 // holds the list of all trainees
 var trainees = [];
 // holds the list of trainees to be shown on the table
@@ -407,7 +407,7 @@ var isJapanese = false;
 setLang();
 //window.addEventListener("load", function () {
   populateRanking();
-  readFromCSV("./trainee_info.csv?20191101");
+  readFromCSV("./trainee_info.csv?20191117");
 //});
 // checks the URL for a ranking and uses it to populate ranking
 getRanking();
