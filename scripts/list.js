@@ -248,7 +248,7 @@ function showEliminatedClick(event) {
   }
 }
 
-var currentBorder = 35;
+var currentBorder = 20;
 // holds the list of all trainees
 var trainees = [];
 // holds the list of trainees to be shown on the table
@@ -256,7 +256,7 @@ var filteredTrainees = [];
 // holds true if using japanese
 var isJapanese = false;
 setLang();
-readFromCSV("./trainee_info.csv?20191123");
+readFromCSV("./trainee_info.csv?20191205");
 //getRanking();
 setDate();
 setGrades();
